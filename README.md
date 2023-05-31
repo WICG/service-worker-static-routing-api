@@ -4,8 +4,8 @@
 
 ## Authors
 
-*   Yoshisato Yanagisawa (@yoshisatoyanagisawa)
-*   Shunya Shishido (@sisidovski)
+*   Yoshisato Yanagisawa ([@yoshisatoyanagisawa](https://github.com/yoshisatoyanagisawa))
+*   Shunya Shishido ([@sisidovski](https://github.com/sisidovski))
 
 ## Participate
 
