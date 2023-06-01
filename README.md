@@ -1,5 +1,3 @@
-
-
 # Explainer: ServiceWorker Static Routing API
 
 ## Authors
@@ -64,12 +62,10 @@ offline when it is realized.
 ### WebIDL
 
 Below is the WebIDL of the API.  You may find it more complicated than what it can do now.  That is because it is designed to
-allow evolution to [the full picture](final-form.md) in the future.  That is why condition and source have types to clarify
-what they are.
+allow evolution to [the full picture](final-form.md) in the future.
 
 ```
-// This follows Jake's proposal.  Router is implemented in the
-// InstallEvent.
+// This follows Jake's proposal.  Router is implemented in the InstallEvent.
 interface InstallEvent : ExtendableEvent {
   // `registerRouter` is used to define static routes.
   // Not matching all rules means fallback to the regular process.
@@ -78,12 +74,10 @@ interface InstallEvent : ExtendableEvent {
   Promise<undefined> registerRouter((RouterRule or sequence<RouterRule>) rules);
 }
 
-// RouterRule defines the condition and source of the static
-// routes.  One entry contains one rule.
+// RouterRule defines the condition and source of the static routes.  One entry contains one rule.
 dictionary RouterRule {
-  // In the first version, only the single condition and source
-  // should be enough because we only support urlPattern,
-  // and "network".
+  // In the first version, only the single condition and source should be enough because we only
+  // support urlPattern, and "network".
   RouterCondition condition;
   RouterSourceEnum source;
 }
@@ -93,7 +87,7 @@ dictionary RouterCondition {
 };
 
 dictionary RouterUrlPatternCondition : RouterCondition {
-  // a relative path mattern string usable for URLPattern.
+  // a relative path pattern string usable for URLPattern.
   USVString urlPattern;
 };
 
@@ -105,7 +99,8 @@ enum RouterSourceEnum { "network" };
 #### Bypassing ServiceWorker for particular resources
 
 ```
-// Go straight to the network and bypass invoking "fetch" handlers for all same-origin URLs that start with '/form/'.
+// Go straight to the network and bypass invoking "fetch" handlers for all same-origin URLs that start
+// with '/form/'.
 addEventListener('install', (event) => {
   event.router.register({
     condition: {
@@ -115,7 +110,8 @@ addEventListener('install', (event) => {
   });
 })
 
-// Go straight to the network and bypass invoking "fetch" handlers for all same-origin URLs that start with '/videos/' and '/images/'.
+// Go straight to the network and bypass invoking "fetch" handlers for all same-origin URLs that start
+// with '/videos/' and '/images/'.
 addEventListener('install', (event) => {
   event.router.register([{
     condition: {
@@ -134,7 +130,6 @@ addEventListener('install', (event) => {
 
 ## FAQ
 
-
 ### How is the proposal different from Jake’s original proposal?
 
 We propose “registerRouter” to set routes with specified routes instead of “add” and “get”.  Unlike “add” or “get”,
@@ -151,7 +146,6 @@ URLPattern instead of URL related conditions in the proposal.
     *   “register” method sets ServiceWorker routes with specified routes.
         This can only be called once, and calling this twice will cause an error.
 *   URL related conditions are merged into URLPattern.
-
 
 ### How does it work with [empty fetch listeners](https://github.com/yoshisatoyanagisawa/service-worker-skip-no-op-fetch-handler)?
 
