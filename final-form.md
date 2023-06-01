@@ -178,8 +178,7 @@ addEventListener('install', (event) => {
 addEventListener('install', (event) => {
   event.router.register({
     condition: {
-      type: "and",
-      andCondition: [
+      and: [
         {
           urlPattern: "/articles/*"
         },
