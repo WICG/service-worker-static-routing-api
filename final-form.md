@@ -7,8 +7,7 @@ This document explains WebIDL and examples if all features are fulfilled.
 ## WebIDL
 
 ```
-// This follows Jake's proposal.  Router is implemented in the
-// InstallEvent.
+// This follows Jake's proposal.  Router is implemented in the InstallEvent.
 interface InstallEvent {
   // `registerRouter` is used to define static routes.
   // Not matching all rules means fallback to the regular process.
@@ -17,8 +16,7 @@ interface InstallEvent {
   Promise<undefined> registerRouter((RouterRule or sequence<RouterRule>) rules);
 }
 
-// RouterRule defines the condition and source of the static
-// routes.  One entry contains one rule.
+// RouterRule defines the condition and source of the static routes.  One entry contains one rule.
 dictionary RouterRule {
   (RouterCondition or sequence<RouterCondition>) condition;
   // If no options are needed, developers may write RouterSourceEnum shortly.
@@ -71,11 +69,12 @@ dictionary RouterSource {
   RouterSourceBehaviorEnum behaviorEnum = "finish-with-success";
 };
 
-enum RouterSourceEnum { "network", "cache", "fetch-event", "race-network-and-fetch-event" };
+enum RouterSourceEnum { "network", "cache", "fetch-event", "race-network-and-fetch-handler" };
 
 // Behavior on successful response.
 // finish-with-success: finish getting a response if the source is successful. (default)
-// continue-discarding-latter-results: response with the successful result, while discarding the latter source results.
+// continue-discarding-latter-results: response with the successful result, while discarding the latter
+// source results.
 enum RouterSourceBehaviorEnum { "finish-with-success", "continue-discarding-latter-results" }
 
 dictionary RouterNetworkSource : RouterSource {
@@ -120,12 +119,9 @@ addEventListener('install', (event) => {
     },
     source: [
       {
-        type: "cache",
-        name: "static resources"
+        cacheName: "static resources"
       },
-      {
-        type: "network"
-      }
+      "network"
     ]
   });
 });
@@ -141,16 +137,12 @@ addEventListener('install', (event) => {
       urlPattern: "/articles/*"
     },
     source: [
+      "network"
       {
-        type: "network"
+        cacheName: "articles"
       },
       {
-        type: "cache",
-        name: "articles"
-      },
-      {
-        type: "cache",
-        name: "articles",
+        cacheName: "articles",
         request: "/articles/offline"
       }
     ]
@@ -174,11 +166,7 @@ addEventListener('install', (event) => {
         }
       ],
     },
-    source: [
-      {
-        type: "network"
-      },
-    ]
+    source: "network"
   });
 });
 ```
@@ -200,14 +188,7 @@ addEventListener('install', (event) => {
         }
       ],
     },
-    source: [
-      {
-        type: "fetch"
-      },
-      {
-        type: "network"
-      },
-    ]
+    source: [ "fetch", "network" ]
   });
 });
 ```
@@ -223,11 +204,10 @@ addEventListener('install', (event) => {
     },
     source: [
       {
-        type: "cache"
+        cacheName: "articles",
         behavior: "continue-discarding-latter-results",
       },
       {
-        type: "network",
         updatedCacheName: "articles",
       }
     ]
@@ -244,11 +224,7 @@ addEventListener('install', (event) => {
     condition: {
       urlPattern: "/articles/*"
     },
-    source: [
-      {
-        type: "race-network-and-fetch-event",
-      }
-    ]
+    source: "race-network-and-fetch-handler"
   });
 });
 ```
