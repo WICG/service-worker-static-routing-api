@@ -7,7 +7,7 @@
 
 ## Participate
 
-* https://github.com/yoshisatoyanagisawa/service-worker-static-routing-api/issues
+* https://github.com/w3c/ServiceWorker/issues/1373
 
 ## Background
 
