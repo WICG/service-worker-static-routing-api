@@ -64,7 +64,7 @@ offline when it is realized.
 Below is the WebIDL of the API.  You may find it more complicated than what it can do now.  That is because it is designed to
 allow evolution to [the full picture](final-form.md) in the future.
 
-```
+```webidl
 // This follows Jake's proposal.  Router is implemented in the InstallEvent.
 interface InstallEvent : ExtendableEvent {
   // `registerRouter` is used to define static routes.
@@ -98,7 +98,7 @@ enum RouterSourceEnum { "network" };
 
 #### Bypassing ServiceWorker for particular resources
 
-```
+```js
 // Go straight to the network and bypass invoking "fetch" handlers for all same-origin URLs that start
 // with '/form/'.
 addEventListener('install', (event) => {
@@ -132,20 +132,21 @@ addEventListener('install', (event) => {
 
 ### How is the proposal different from Jake’s original proposal?
 
-We propose “registerRouter” to set routes with specified routes instead of “add” and “get”.  Unlike “add” or “get”,
-“register” sets all the routes at once, and it can only be called once.  This is for ease of understanding the latest routes.
-Unlike Jake’s proposal, “registerRouter” is a part of the install event for simplicity.  When the install listener is executed,
-the routes are not set.  Web developers can call “register” to set routes at that time.
+We propose `registerRouter()` to set routes with specified routes instead of `add()` and `get()`.  Unlike `add()` or `get()`,
+`registerRouter()` sets all the routes at once, and it can only be called once.  This is for ease of understanding the latest routes.
 
-Our proposal uses URLPattern, which was not available when Jake made the original proposal.  It is natural evolution to use
-URLPattern instead of URL related conditions in the proposal.
+Unlike Jake’s proposal, `registerRouter()` is a part of the `install` event for simplicity.  When the `install` listener is executed,
+the routes are not set.  Web developers can call `registerRouter()` to set routes at that time.
+
+Our proposal uses [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern), which was not available when Jake made the original proposal.  It is natural evolution to use
+`URLPattern` instead of URL related conditions in the proposal.
 
 #### Summary
 
-*   Introduce “register” method, and won’t provide “add” or “get” method.
-    *   “register” method sets ServiceWorker routes with specified routes.
+*   Introduce `registerRouter()` method, and won’t provide `add()` or `get()` methods.
+    *   `registerRouter()` method sets ServiceWorker routes with specified routes.
         This can only be called once, and calling this twice will cause an error.
-*   URL related conditions are merged into URLPattern.
+*   URL related conditions are merged into `URLPattern`.
 
 ### How does it work with [empty fetch listeners](https://github.com/yoshisatoyanagisawa/service-worker-skip-no-op-fetch-handler)?
 
@@ -163,10 +164,10 @@ fetch handler path, and Navigation Preload would be used if it is configured.
 [The full picture](final-form.md) is large, and it is not easy to implement it at once.  We plan to gradually roll it out with
 the following order:
 
-*   RouterURLPatternCondition, RouterNetworkSource (this proposal)
-*   RouterRequestCondition, RouterAndCondition, RouterNotCondition
-*   RouterRunningStatusCondition, RouterOrCondition
-*   RouterTimeCondition
-*   RouterCacheSource, RouterFetchSource, RouterSourceBehaviorEnum, allowing sequence of sources. (offline/online-first support)
+*   `RouterURLPatternCondition`, `RouterNetworkSource` (this proposal)
+*   `RouterRequestCondition`, `RouterAndCondition`, `RouterNotCondition`
+*   `RouterRunningStatusCondition`, `RouterOrCondition`
+*   `RouterTimeCondition`
+*   `RouterCacheSource`, `RouterFetchSource`, `RouterSourceBehaviorEnum`, allowing sequence of sources. (offline/online-first support)
 *   Stale-While-Revalidate support.
 *   race-network-and-fetch-event support
