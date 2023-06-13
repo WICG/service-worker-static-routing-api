@@ -102,7 +102,7 @@ enum RouterSourceEnum { "network" };
 // Go straight to the network and bypass invoking "fetch" handlers for all same-origin URLs that start
 // with '/form/'.
 addEventListener('install', (event) => {
-  event.router.register({
+  event.registerRouter({
     condition: {
       urlPattern: "/form/*"
     },
@@ -113,7 +113,7 @@ addEventListener('install', (event) => {
 // Go straight to the network and bypass invoking "fetch" handlers for all same-origin URLs that start
 // with '/videos/' and '/images/'.
 addEventListener('install', (event) => {
-  event.router.register([{
+  event.registerRouter([{
     condition: {
       urlPattern: "/images/*"
     },
@@ -134,12 +134,15 @@ addEventListener('install', (event) => {
 
 We propose `registerRouter()` to set routes with specified routes instead of `add()` and `get()`.  Unlike `add()` or `get()`,
 `registerRouter()` sets all the routes at once, and it can only be called once.  This is for ease of understanding the latest routes.
+`registerRouter` will be a part of the `install` event [^1].
+Since `registerRouter()` is only the method to set the router rules, we put it as a part of the `install` event.
+When the `install` listener is executed, no routes are set.  Web developers can call `registerRouter()` to set
+routes at that time.
 
-Unlike Jake’s proposal, `registerRouter()` is a part of the `install` event for simplicity.  When the `install` listener is executed,
-the routes are not set.  Web developers can call `registerRouter()` to set routes at that time.
+Our proposal uses [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern), which was not available when Jake made
+the original proposal.  It is natural evolution to use `URLPattern` instead of URL related conditions in the proposal.
 
-Our proposal uses [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern), which was not available when Jake made the original proposal.  It is natural evolution to use
-`URLPattern` instead of URL related conditions in the proposal.
+[^1]: We followed [Jake's proposal](https://github.com/w3c/ServiceWorker/issues/1373#issuecomment-451436409) to use the install event.
 
 #### Summary
 
