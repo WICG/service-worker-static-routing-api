@@ -128,6 +128,20 @@ addEventListener('install', (event) => {
 });
 ```
 
+## Origin Trial
+
+We (Google Chrome team) will start the origin trial, which allows developers to opt-in the feature on their sites. Regarding the introduction and basic registration process, please refer to [this page](https://developer.chrome.com/docs/web-platform/origin-trials/).
+
+Once a token string is generated from [the dashboard](https://developer.chrome.com/origintrials), developers need to set the HTTP response header to their ServiceWorker files.
+
+```
+Origin-Trial: TOKEN_GOES_HERE
+```
+
+One important thing to mention here is that the header has to be set to **the ServiceWorker script, not to the page**. Also, HTML meta tags are not supported. The feature will take effect after the ServiceWorker registration.
+
+For local testing, you can enable the feature by flipping the `Service Worker Static Router` flag from chrome://flags.
+
 ## FAQ
 
 ### How is the proposal different from Jake’s original proposal?
