@@ -28,9 +28,8 @@ dictionary RouterCondition {
 };
 
 directory RouterUrlPatternCondition : RouterCondition {
-  // a relative path pattern string usable for URLPattern.
-  // If you use URLPatternInit, baseURL and hostname should not 
-  // be set.
+  // A relative path pattern string usable for URLPattern, which implicitly set baseURL
+  // from the current origin that the ServiceWorker script belongs.
   (USVString or URLPatternInit) urlPattern;
 };
 
@@ -106,7 +105,7 @@ dictionary RouterFetchEventSource : RouterSource {
 ```
 // offline first for all same-origin URLs whose suffix is .png and .css.
 addEventListener('install', (event) => {
-  event.router.register({
+  event.registerRouter({
     condition: {
       or: [
         {
@@ -132,12 +131,12 @@ addEventListener('install', (event) => {
 ```
 // online first for all same-origin URLs that start with "/articles".
 addEventListener('install', (event) => {
-  event.router.register({
+  event.registerRouter({
     condition: {
       urlPattern: "/articles/*"
     },
     source: [
-      "network"
+      "network",
       {
         cacheName: "articles"
       },
@@ -155,7 +154,7 @@ addEventListener('install', (event) => {
 ```
 // not use ServiceWorker for posting to 'form'.
 addEventListener('install', (event) => {
-  event.router.register({
+  event.registerRouter({
     condition: {
       and: [
         {
@@ -176,7 +175,7 @@ addEventListener('install', (event) => {
 ```
 // Use ServiceWorker for URLs that start with "/articles", if the service worker is currently running.
 addEventListener('install', (event) => {
-  event.router.register({
+  event.registerRouter({
     condition: {
       and: [
         {
@@ -187,7 +186,7 @@ addEventListener('install', (event) => {
         }
       ],
     },
-    source: [ "fetch", "network" ]
+    source: [ "fetch-event", "network" ]
   });
 });
 ```
@@ -197,7 +196,7 @@ addEventListener('install', (event) => {
 ```
 // stale-while-revalidate same-origin URLs that start with "/articles".
 addEventListener('install', (event) => {
-  event.router.register({
+  event.registerRouter({
     condition: {
       urlPattern: "/articles/*"
     },
@@ -219,7 +218,7 @@ addEventListener('install', (event) => {
 ```
 // race for all same-origin URLs that start with "/articles".
 addEventListener('install', (event) => {
-  event.router.register({
+  event.registerRouter({
     condition: {
       urlPattern: "/articles/*"
     },
