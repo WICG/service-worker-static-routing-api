@@ -109,10 +109,10 @@ addEventListener('install', (event) => {
     condition: {
       or: [
         {
-          urlPattern: "*.png"
+          urlPattern: "/**/*.png"
         },
         {
-          urlPattern: "*.css"
+          urlPattern: "/**/*.css"
         },
       ]
     },
