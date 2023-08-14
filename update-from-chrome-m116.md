@@ -151,4 +151,4 @@ p.test(“https://www.example.org/code/icon.png”) //  true
 p.test(“https://www.example.org/icon.png”) // false
 ```
 
-If you want to test M116’s condition, please see “How can I convert the M116’s urlPattern condition to M117’s?”.
+If you want to test M116’s condition, please see "[How can I convert the M116’s urlPattern condition to M117’s?](#how-can-i-convert-the-m116s-urlpattern-condition-to-m117s)".
