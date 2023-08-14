@@ -188,3 +188,8 @@ the following order:
 *   `RouterCacheSource`, `RouterFetchSource`, `RouterSourceBehaviorEnum`, allowing sequence of sources. (offline/online-first support)
 *   Stale-While-Revalidate support.
 *   race-network-and-fetch-event support
+
+### How Chrome implements this?
+
+The Google Chrome team starts the Oritin Trial from M116, and the implementation has slightly been chagned from M117.
+It has been explained in [a separate document](update-from-chrome-m116.md).
