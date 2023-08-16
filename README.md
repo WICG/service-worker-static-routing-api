@@ -84,11 +84,9 @@ dictionary RouterRule {
 
 // Defines when to respond from the source.
 dictionary RouterCondition {
-};
-
-dictionary RouterUrlPatternCondition : RouterCondition {
-  // a relative path pattern string usable for URLPattern.
-  USVString urlPattern;
+  // https://wicg.github.io/urlpattern/#typedefdef-urlpatterninput
+  // For a USVString input, a ServiceWorker script's URL is used as a base URL.
+  URLPatternInput urlPattern;
 };
 
 enum RouterSourceEnum { "network" };
