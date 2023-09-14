@@ -97,29 +97,28 @@ enum RouterSourceEnum { "network" };
 #### Bypassing ServiceWorker for particular resources
 
 ```js
-// Go straight to the network and bypass invoking "fetch" handlers for all same-origin URLs that start
-// with '/form/'.
+// Go straight to the network and bypass invoking "fetch" handlers for URLs that start with '/form/'.
 addEventListener('install', (event) => {
   event.registerRouter({
     condition: {
-      urlPattern: "/form/*"
+      urlPattern: new URLPattern({pathname: "/form/*"})
     },
     source: "network"
   });
 })
 
-// Go straight to the network and bypass invoking "fetch" handlers for all same-origin URLs that start
+// Go straight to the network and bypass invoking "fetch" handlers for URLs that start
 // with '/videos/' and '/images/'.
 addEventListener('install', (event) => {
   event.registerRouter([{
     condition: {
-      urlPattern: "/images/*"
+      urlPattern: new URLPattern({pathname: "/images/*"})
     },
     source: "network"
   },
   {
     condition: {
-      urlPattern: "/videos/*"
+      urlPattern: new URLPattern({pathname: "/videos/*"})
     },
     source: "network"
   }]);
