@@ -67,11 +67,11 @@ allow evolution to [the full picture](final-form.md) in the future.
 ```webidl
 // This follows Jake's proposal.  Router is implemented in the InstallEvent.
 interface InstallEvent : ExtendableEvent {
-  // `registerRouter` is used to define static routes.
+  // `addRoutes` is used to define static routes.
   // Not matching all rules means fallback to the regular process.
   // i.e. fetch handler.
   // Promise is rejected for invalid `rules` e.g. syntax error.
-  Promise<undefined> registerRouter((RouterRule or sequence<RouterRule>) rules);
+  Promise<undefined> addRoutes((RouterRule or sequence<RouterRule>) rules);
 }
 
 // RouterRule defines the condition and source of the static routes.  One entry contains one rule.
@@ -92,6 +92,10 @@ dictionary RouterCondition {
 enum RouterSourceEnum { "network" };
 ```
 
+Note that `registerRouter`, which can be called once, has been deprecated.  To allow third-party services to add routes,
+the method has been renamed to `addRoutes` and can be called multiple times.  The rules are evalauted sequentially with
+added order.  It means that if `addRoutes` are called multiple times, rules added ealier will be evaluated ealier.
+
 ### Examples
 
 #### Bypassing ServiceWorker for particular resources
@@ -99,7 +103,7 @@ enum RouterSourceEnum { "network" };
 ```js
 // Go straight to the network and bypass invoking "fetch" handlers for URLs that start with '/form/'.
 addEventListener('install', (event) => {
-  event.registerRouter({
+  event.addRoutes({
     condition: {
       urlPattern: new URLPattern({pathname: "/form/*"})
     },
@@ -110,7 +114,7 @@ addEventListener('install', (event) => {
 // Go straight to the network and bypass invoking "fetch" handlers for URLs that start
 // with '/videos/' and '/images/'.
 addEventListener('install', (event) => {
-  event.registerRouter([{
+  event.addRoutes([{
     condition: {
       urlPattern: new URLPattern({pathname: "/images/*"})
     },
@@ -143,11 +147,12 @@ For local testing, you can enable the feature by flipping the `Service Worker St
 
 ### How is the proposal different from Jake’s original proposal?
 
-We propose `registerRouter()` to set routes with specified routes instead of `add()` and `get()`.  Unlike `add()` or `get()`,
-`registerRouter()` sets all the routes at once, and it can only be called once.  This is for ease of understanding the latest routes.
-`registerRouter` will be a part of the `install` event [^1].
-Since `registerRouter()` is only the method to set the router rules, we put it as a part of the `install` event.
-When the `install` listener is executed, no routes are set.  Web developers can call `registerRouter()` to set
+We propose `addRoutes()` to set routes with specified routes instead of `add()` and `get()`.  Unlike `add()` or `get()`,
+`addRoutes()` can take a list of rules in addition to a single rule.  It can be called multiple times to be used by third party services
+to register their routes.  Web developers need to use the browser mechanisms like devtools to check the latest router rules.
+`addRoutes` is a part of the `install` event [^1].
+Since `addRoutes()` is only the method to set the router rules, we put it as a part of the `install` event.
+When the `install` listener is executed, no routes are set.  Web developers can call `addRoutes()` to set
 routes at that time.
 
 Our proposal uses [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern), which was not available when Jake made
@@ -157,9 +162,9 @@ the original proposal.  It is natural evolution to use `URLPattern` instead of U
 
 #### Summary
 
-*   Introduce `registerRouter()` method, and won’t provide `add()` or `get()` methods.
-    *   `registerRouter()` method sets ServiceWorker routes with specified routes.
-        This can only be called once, and calling this twice will cause an error.
+*   Introduce `addRoutes()` method, and won’t provide `add()` or `get()` methods.
+    *   `addRoutes()` method sets ServiceWorker routes with specified routes.
+        To allow third party services to use the API, the method can be called multile times.
 *   URL related conditions are merged into `URLPattern`.
 
 ### How does it work with [empty fetch listeners](https://github.com/yoshisatoyanagisawa/service-worker-skip-no-op-fetch-handler)?
