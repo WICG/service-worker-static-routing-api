@@ -67,7 +67,7 @@ allow evolution to [the full picture](final-form.md) in the future.
 ```webidl
 // This follows Jake's proposal.  Router is implemented in the InstallEvent.
 interface InstallEvent : ExtendableEvent {
-  // `addRoutes` is used to define static routes.
+  // `addRoutes()` is used to define static routes.
   // Not matching all rules means fallback to the regular process.
   // i.e. fetch handler.
   // Promise is rejected for invalid `rules` e.g. syntax error.
@@ -92,7 +92,7 @@ dictionary RouterCondition {
 enum RouterSourceEnum { "network" };
 ```
 
-Note that the rules are evalauted sequentially with added order.  It means that if `addRoutes` is called multiple times,
+Note that the rules are evalauted sequentially with added order.  It means that if `addRoutes()` is called multiple times,
 rules added ealier will be evaluated ealier.
 
 ### Examples
@@ -150,7 +150,7 @@ We propose `addRoutes()` to set routes with specified routes instead of `add()` 
 `addRoutes()` can take a list of rules in addition to a single rule.  It can be called multiple times in case if needed
 (e.g. imported third-party service worker script already added some routes).  Web developers need to use the browser mechanisms like
 devtools to check the latest router rules.
-`addRoutes` is a part of the `install` event [^1].
+`addRoutes()` is a part of the `install` event [^1].
 Since `addRoutes()` is only the method to set the router rules, we put it as a part of the `install` event.
 When the `install` listener is executed, no routes are set.  Web developers can call `addRoutes()` to set
 routes at that time.
@@ -196,5 +196,5 @@ the following order:
 The Google Chrome team starts the Oritin Trial from M116, and the implementation has slightly been chagned from M117.
 It has been explained in [a separate document](update-from-chrome-m116.md).
 
-There was `registerRouter`.  For ease of understanding the latest routes, it can be called once.  However, it made it difficult for
+There was `registerRouter()`.  For ease of understanding the latest routes, it can be called once.  However, it made it difficult for
 the third-party services to add routes.  To solve the situation, the method has been renamed to `addRoutes` and can be called multiple times.  
