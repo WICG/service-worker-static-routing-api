@@ -164,7 +164,7 @@ the original proposal.  It is natural evolution to use `URLPattern` instead of U
 
 *   Introduce `addRoutes()` method, and won’t provide `add()` or `get()` methods.
     *   `addRoutes()` method sets ServiceWorker routes with specified routes.
-        To allow third party services to use the API, the method can be called multile times.
+        To allow third party services to use the API, the method can be called multiple times.
 *   URL related conditions are merged into `URLPattern`.
 
 ### How does it work with [empty fetch listeners](https://github.com/yoshisatoyanagisawa/service-worker-skip-no-op-fetch-handler)?
