@@ -197,4 +197,4 @@ The Google Chrome team starts the Oritin Trial from M116, and the implementation
 It has been explained in [a separate document](update-from-chrome-m116.md).
 
 There was `registerRouter()`.  For ease of understanding the latest routes, it can be called once.  However, it made it difficult for
-the third-party services to add routes.  To solve the situation, the method has been renamed to `addRoutes` and can be called multiple times.  
+the third-party services to add routes.  To solve the situation, the method has been renamed to `addRoutes()` and can be called multiple times.  
