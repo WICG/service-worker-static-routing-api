@@ -193,7 +193,7 @@ the following order:
 
 ### How Chrome implements this?
 
-The Google Chrome team starts the Oritin Trial from M116, and the implementation has slightly been chagned from M117.
+The Google Chrome team starts the Origin Trial from M116, and the implementation has slightly been changed from M117.
 It has been explained in [a separate document](update-from-chrome-m116.md).
 
 There was `registerRouter()`.  For ease of understanding the latest routes, it can be called once.  However, it made it difficult for
