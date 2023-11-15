@@ -9,11 +9,11 @@ This document explains WebIDL and examples if all features are fulfilled.
 ```
 // This follows Jake's proposal.  Router is implemented in the InstallEvent.
 interface InstallEvent {
-  // `registerRouter` is used to define static routes.
+  // `addRoutes` is used to define static routes.
   // Not matching all rules means fallback to the regular process.
   // i.e. fetch handler.
   // Promise is rejected for invalid `rules` e.g. syntax error.
-  Promise<undefined> registerRouter((RouterRule or sequence<RouterRule>) rules);
+  Promise<undefined> addRoutes((RouterRule or sequence<RouterRule>) rules);
 }
 
 // RouterRule defines the condition and source of the static routes.  One entry contains one rule.
@@ -105,7 +105,7 @@ dictionary RouterFetchEventSource : RouterSource {
 ```
 // offline first for all same-origin URLs whose suffix is .png and .css.
 addEventListener('install', (event) => {
-  event.registerRouter({
+  event.addRoutes({
     condition: {
       or: [
         {
@@ -131,7 +131,7 @@ addEventListener('install', (event) => {
 ```
 // online first for all same-origin URLs that start with "/articles".
 addEventListener('install', (event) => {
-  event.registerRouter({
+  event.addRoutes({
     condition: {
       urlPattern: "/articles/*"
     },
@@ -154,7 +154,7 @@ addEventListener('install', (event) => {
 ```
 // not use ServiceWorker for posting to 'form'.
 addEventListener('install', (event) => {
-  event.registerRouter({
+  event.addRoutes({
     condition: {
       and: [
         {
@@ -175,7 +175,7 @@ addEventListener('install', (event) => {
 ```
 // Use ServiceWorker for URLs that start with "/articles", if the service worker is currently running.
 addEventListener('install', (event) => {
-  event.registerRouter({
+  event.addRoutes({
     condition: {
       and: [
         {
@@ -196,7 +196,7 @@ addEventListener('install', (event) => {
 ```
 // stale-while-revalidate same-origin URLs that start with "/articles".
 addEventListener('install', (event) => {
-  event.registerRouter({
+  event.addRoutes({
     condition: {
       urlPattern: "/articles/*"
     },
@@ -218,7 +218,7 @@ addEventListener('install', (event) => {
 ```
 // race for all same-origin URLs that start with "/articles".
 addEventListener('install', (event) => {
-  event.registerRouter({
+  event.addRoutes({
     condition: {
       urlPattern: "/articles/*"
     },
