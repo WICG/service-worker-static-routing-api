@@ -6,7 +6,7 @@ This document explains WebIDL and examples if all features are fulfilled.
 
 ## WebIDL
 
-```
+```idl
 // This follows Jake's proposal.  Router is implemented in the InstallEvent.
 interface InstallEvent {
   // `addRoutes` is used to define static routes.
@@ -102,7 +102,7 @@ dictionary RouterFetchEventSource : RouterSource {
 
 ### Offline-first
 
-```
+```js
 // offline first for all same-origin URLs whose suffix is .png and .css.
 addEventListener('install', (event) => {
   event.addRoutes({
@@ -128,7 +128,7 @@ addEventListener('install', (event) => {
 
 ### Online-first
 
-```
+```js
 // online first for all same-origin URLs that start with "/articles".
 addEventListener('install', (event) => {
   event.addRoutes({
@@ -151,7 +151,7 @@ addEventListener('install', (event) => {
 
 ### Ignore ServiceWorker for post requests
 
-```
+```js
 // not use ServiceWorker for posting to 'form'.
 addEventListener('install', (event) => {
   event.addRoutes({
@@ -172,7 +172,7 @@ addEventListener('install', (event) => {
 
 ### Use service worker iif running
 
-```
+```js
 // Use ServiceWorker for URLs that start with "/articles", if the service worker is currently running.
 addEventListener('install', (event) => {
   event.addRoutes({
@@ -193,7 +193,7 @@ addEventListener('install', (event) => {
 
 ### stale-while-revalidate
 
-```
+```js
 // stale-while-revalidate same-origin URLs that start with "/articles".
 addEventListener('install', (event) => {
   event.addRoutes({
@@ -215,7 +215,7 @@ addEventListener('install', (event) => {
 
 ### race fetch listener and network
 
-```
+```js
 // race for all same-origin URLs that start with "/articles".
 addEventListener('install', (event) => {
   event.addRoutes({
