@@ -172,15 +172,18 @@ the original proposal.  It is natural evolution to use `URLPattern` instead of U
 For the "network" source, we can safely ignore the routes if there is no fetch handler, except for a debugging purpose.
 In [the full picture](final-form.md), we introduce "cache", "fetch-event", and "race-network-and-fetch-handler" sources.
 The "cache" source should look up a request from the cache storage even if there is no fetch handler.
-`addRoutes()` is expected to raise for the "fetch-event" and "race-network-and-fetch-handler" sources.
+Moreover, it does not need to run the fetch handlers regardless of cache hit or cache miss.
+On the other hand, the "fetch-event" and "race-network-and-fetch-handler" sources run the fetch handlers.
+`addRoutes()` should return a promise rejected with a *TypeError* if these sources are used while no fetch handlers are set.
 
 ### How does it work with [empty fetch listeners](https://github.com/yoshisatoyanagisawa/service-worker-skip-no-op-fetch-handler)?
 
 If [all the fetch listeners are empty functions](https://w3c.github.io/ServiceWorker/#all-fetch-listeners-are-empty-algorithm),
 routes that only have the "network" source can be ignored, except for a debugging purpose.
 Like the no fetch handler case above, the "cache" source should look up the cache storage regardless of the empty fetch handler or not.
-However, `addRoutes()` should not raise for the "fetch-event" and "race-network-and-fetch-handler" sources.
-During the navigation, the fetch handlers may run for these sources.
+However, `addRoutes()` should return a promise resolved with undefined for the "fetch-event" and "race-network-and-fetch-handler" sources
+because the fetch handlers exist.
+During the navigation, the fetch handlers may not need to run for these sources because they are empty.
 
 ### How does it work with Navigation Preload?
 
