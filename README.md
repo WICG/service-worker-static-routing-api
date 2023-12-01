@@ -167,11 +167,20 @@ the original proposal.  It is natural evolution to use `URLPattern` instead of U
         To allow third party services to use the API, the method can be called multiple times.
 *   URL related conditions are merged into `URLPattern`.
 
+### How does it work if there is no fetch handler?
+
+For the "network" source, we can safely ignore the routes if there is no fetch handler, except for a debugging purpose.
+In [the full picture](final-form.md), we introduce "cache", "fetch-event", and "race-network-and-fetch-handler" sources.
+The "cache" source should look up a request from the cache storage even if there is no fetch handler.
+`addRoutes()` is expected to raise for the "fetch-event" and "race-network-and-fetch-handler" sources.
+
 ### How does it work with [empty fetch listeners](https://github.com/yoshisatoyanagisawa/service-worker-skip-no-op-fetch-handler)?
 
 If [all the fetch listeners are empty functions](https://w3c.github.io/ServiceWorker/#all-fetch-listeners-are-empty-algorithm),
-routes may not be evaluated because routes expect some is handled by the fetch listeners while others are not.
-If empty fetch listeners are set, routes should not be needed.
+routes that only have the "network" source can be ignored, except for a debugging purpose.
+Like the no fetch handler case above, the "cache" source should look up the cache storage regardless of the empty fetch handler or not.
+However, `addRoutes()` should not raise for the "fetch-event" and "race-network-and-fetch-handler" sources.
+During the navigation, the fetch handlers may run for these sources.
 
 ### How does it work with Navigation Preload?
 
