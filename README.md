@@ -167,11 +167,25 @@ the original proposal.  It is natural evolution to use `URLPattern` instead of U
         To allow third party services to use the API, the method can be called multiple times.
 *   URL related conditions are merged into `URLPattern`.
 
+### How does it work if there is no fetch handler?
+
+For the "network" source, we can safely ignore the routes if there is no fetch handler, except for a debugging purpose.
+In [the full picture](final-form.md), we introduce "cache", "fetch-event", and "race-network-and-fetch-handler" sources.
+The "cache" source should look up a request from the cache storage even if there is no fetch handler.
+Moreover, it does not need to run the fetch handlers regardless of cache hit or cache miss.
+On the other hand, the "fetch-event" and "race-network-and-fetch-handler" sources run the fetch handlers.
+`addRoutes()` should return a promise rejected with a *TypeError* if these sources are used while no fetch handlers are set.
+
 ### How does it work with [empty fetch listeners](https://github.com/yoshisatoyanagisawa/service-worker-skip-no-op-fetch-handler)?
 
 If [all the fetch listeners are empty functions](https://w3c.github.io/ServiceWorker/#all-fetch-listeners-are-empty-algorithm),
-routes may not be evaluated because routes expect some is handled by the fetch listeners while others are not.
-If empty fetch listeners are set, routes should not be needed.
+routes that only have the "network" source can be ignored, except for a debugging purpose.
+Like the no fetch handler case above, the "cache" source should look up the cache storage regardless of the empty fetch handler or not.
+However, unlike the no fetch handler case above,
+`addRoutes()` should return a promise resolved with undefined for the "fetch-event" and "race-network-and-fetch-handler" sources
+because the fetch handler exists.
+During the navigation, the fetch handler may not need to run for these sources because they are empty,
+which is allowed by https://github.com/w3c/ServiceWorker/pull/1674.
 
 ### How does it work with Navigation Preload?
 
