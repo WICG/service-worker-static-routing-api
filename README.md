@@ -184,7 +184,8 @@ Like the no fetch handler case above, the "cache" source should look up the cach
 However, unlike the no fetch handler case above,
 `addRoutes()` should return a promise resolved with undefined for the "fetch-event" and "race-network-and-fetch-handler" sources
 because the fetch handler exists.
-During the navigation, the fetch handler may not need to run for these sources because they are empty.
+During the navigation, the fetch handler may not need to run for these sources because they are empty,
+which is allowed by https://github.com/w3c/ServiceWorker/pull/1674.
 
 ### How does it work with Navigation Preload?
 
