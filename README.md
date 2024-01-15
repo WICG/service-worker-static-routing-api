@@ -144,6 +144,10 @@ For local testing, you can enable the feature by flipping the `Service Worker St
 
 ## FAQ
 
+### Is a demo available for the API?
+
+Please visit https://sw-static-routing-demo.glitch.me/ with the latest Chrome.
+
 ### How is the proposal different from Jake’s original proposal?
 
 We propose `addRoutes()` to set routes with specified routes instead of `add()` and `get()`.  Unlike `add()` or `get()`,
