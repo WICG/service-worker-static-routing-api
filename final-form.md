@@ -48,7 +48,7 @@ dictionary RouterRunningStatusCondition : RouterCondition {
   RunningStatusEnum runningStatus;
 };
 
-enum RunningStatusEnum { "running", "stopped" }
+enum RunningStatusEnum { "running", "not-running" }
 
 dictionary RouterAndCondition : RouterCondition {
   sequence<RouterCondition> and;
