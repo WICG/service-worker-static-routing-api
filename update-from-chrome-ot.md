@@ -29,9 +29,10 @@ Two major updates:
 
 ## New conditions and sources
 
-Following conditions and sources are newly added since M116.
+We added some new conditions and sources since M116, and now following conditions and sources are available to use:
 
 * `condition`: 
+  * `urlPattern`: A [URLPattern](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern) object, [a dictionary](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern#input), or a string.  See [Behavior change on URLPattern condition](#behavior-change-on-urlpattern-condition) for details.
   * `requestMethod`: A string containing a Request [method](https://developer.mozilla.org/docs/Web/API/Request/method).
   * `requestMode`: A string containing a Request [mode](https://developer.mozilla.org/docs/Web/API/Request/mode).
   * `requestDestination`: A string containing a Request [destination](https://developer.mozilla.org/docs/Web/API/Request/destination).
@@ -40,7 +41,7 @@ Following conditions and sources are newly added since M116.
   * `"cache"`
   * `"fetch-event"`
   * `"race-network-and-fetch-handler"`
-  * `cacheName`: A string containing the cache storage’s cacheName
+  * an object with the string `cacheName` property: The string tells the cache storage’s cacheName
 
 e.g.
 Directly goes to network for the POST method
