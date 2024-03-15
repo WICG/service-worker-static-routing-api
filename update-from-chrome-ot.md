@@ -86,6 +86,15 @@ Use cache storage named “pictures” for files whose name ends with “.png”
 }
 ```
 
+e.g.
+Directory fetch from the network for subresources served via a content delivery network (CDN) named "cdn.example.com".
+```js
+{
+  condition: {urlPattern: new URLPattern({hostname: "cdn.example.com"})},
+  source: "network"
+}
+```
+
 ## DevTools support
 
 ### Show registered router rules
