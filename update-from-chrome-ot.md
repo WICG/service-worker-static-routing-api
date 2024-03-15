@@ -91,13 +91,9 @@ Use cache storage named “pictures” for files whose name ends with “.png”
 
 Registered router rules are displayed in the **Service Worker** Tab of the **Application** panel.
 
-"image"
+![DevTools Application Panel](devtools-application-panel.png "DevTools: Application panel")
 
 In the **Network** Panel, if the request matches the registered rule, this is indicated in the size column.
 When holding the pointer over the size column, the registered router ID is shown.  Corresponding rules are displayed in the application tab.
 
-"image"
-
-
-
-
+![Devtools Network Panel](devtools-network-panel.png "DevTools: Network panel")
