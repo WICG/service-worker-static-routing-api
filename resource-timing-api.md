@@ -2,9 +2,8 @@
 
 ## Authors
 
-Keita Suzuki (@quasi-mod)
-
-Yoshisato Yanagisawa (@yoshisatoyanagisawa)
+- Keita Suzuki ([@quasi-mod](https://github.com/quasi-mod))
+- Yoshisato Yanagisawa ([@yoshisatoyanagisawa](https://github.com/yoshisatoyanagisawa))
 
 
 ## Participate
