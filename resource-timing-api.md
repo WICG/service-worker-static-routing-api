@@ -240,8 +240,7 @@ As mentioned above, the recorded fields will be different depending on the match
    </td>
   </tr>
   <tr>
-   <td rowspan="5">Matched \
-Source
+   <td rowspan="5">Matched Source
    </td>
    <td>Fetch
    </td>
@@ -322,15 +321,14 @@ type is as follows:
    </td>
   </tr>
   <tr>
-   <td rowspan="5">Matched \
-Source
+   <td rowspan="5">Matched Source
    </td>
    <td>Fetch
    </td>
    <td>Fetch (Success)
    </td>
-   <td style="background-color: #f4cccc">Network (Fallback: \
- Fetch handler is invalid)
+   <td style="background-color: #f4cccc">Network <p>
+   (Fallback: Fetch handler is invalid)
    </td>
    <td style="background-color: #cccccc">N/A
    </td>
@@ -352,7 +350,7 @@ Source
 <p>
 (Fetch win)
    </td>
-   <td>Network (Network win or Fetch fallback)
+   <td>Network<p>(Network win or Fetch fallback)
    </td>
    <td style="background-color: #cccccc">N/A
    </td>
@@ -362,13 +360,10 @@ Source
    </td>
    <td style="background-color: #cccccc">N/A
    </td>
-   <td style="background-color: #f4cccc">Network (Fallback:
-<p>
-Cache Missed)
+   <td style="background-color: #f4cccc">Network<p>
+   (Fallback: Cache Missed)
    </td>
-   <td>Cache
-<p>
-(Cache hit)
+   <td>Cache<p>(Cache hit)
    </td>
   </tr>
   <tr>
