@@ -47,8 +47,8 @@ Routing API. Developers would benefit from having fields that provide informatio
 *   the actual source from which the resource was retrieved
 *   the time it took to match the route
 
-This information will allow developers to measure the latency incurred by the Static
-Routing API such as router evaluation time or time required to conduct cache lookup,
+This information will allow developers to measure the latency incurred by the
+API such as router evaluation time or time required to conduct cache lookup,
 or determine if the matched source is the final source used (can find out if the
 matched source failed to get the resource or not, and which source was used as
 the alternative).
