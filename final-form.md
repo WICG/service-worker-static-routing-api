@@ -226,3 +226,16 @@ addEventListener('install', (event) => {
   });
 });
 ```
+
+### Avoid using ServiceWorker for non app-shell resources 
+```js
+// load non app shell resources from network.
+addEventListener('install', (event) => {
+  event.addRoutes({
+    condition: {
+      not: {urlPattern: "/app-shell/*"}
+    },
+    source: "network"
+  });
+});
+```
