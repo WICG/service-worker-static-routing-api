@@ -50,6 +50,11 @@ dictionary RouterRunningStatusCondition : RouterCondition {
 
 enum RunningStatusEnum { "running", "not-running" }
 
+dictionary RouterNetworkQualityCondition : RouterCondition {
+  // https://wicg.github.io/netinfo/#dom-effectiveconnectiontype
+  EffectiveConnectionType effectiveConnectionType;
+};
+
 dictionary RouterAndCondition : RouterCondition {
   sequence<RouterCondition> and;
 };
@@ -234,6 +239,19 @@ addEventListener('install', (event) => {
   event.addRoutes({
     condition: {
       not: {urlPattern: "/app-shell/*"}
+    },
+    source: "network"
+  });
+});
+```
+
+### Avoid using ServiceWorker for 4g network 
+```js
+// If network connection is good enough, use network directly.
+addEventListener('install', (event) => {
+  event.addRoutes({
+    condition: {
+      effectiveConnectionType: "4g"
     },
     source: "network"
   });
