@@ -51,7 +51,7 @@ dictionary RouterRunningStatusCondition : RouterCondition {
 enum RunningStatusEnum { "running", "not-running" }
 
 dictionary RouterNetworkQualityCondition : RouterCondition {
-  // https://wicg.github.io/netinfo/#dom-effectiveconnectiontype
+  // https://wicg.github.io/netinfo/#effective-connection-types
   EffectiveConnectionType effectiveConnectionType;
 };
 
