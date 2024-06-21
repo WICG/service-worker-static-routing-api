@@ -245,15 +245,19 @@ addEventListener('install', (event) => {
 });
 ```
 
-### Avoid using ServiceWorker for 4g network 
+### Avoid using ServiceWorker for good network connection
 ```js
 // If network connection is good enough, use network directly.
 addEventListener('install', (event) => {
   event.addRoutes({
     condition: {
-      effectiveConnectionType: "4g"
+      or: [
+        {effectiveConnectionType: "3g"},
+        {effectiveConnectionType: "4g"}
+      ]
     },
     source: "network"
   });
+  // Otherwise, fallback to fetch-handler (default).
 });
 ```
