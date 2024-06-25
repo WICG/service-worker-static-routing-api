@@ -50,9 +50,16 @@ dictionary RouterRunningStatusCondition : RouterCondition {
 
 enum RunningStatusEnum { "running", "not-running" }
 
+dictionary NetworkInformationRoundTripTime {
+  unsigned long lt;
+  unsigned long le;
+  unsigned long gt;
+  unsigned long ge;
+};
+
 dictionary RouterNetworkQualityCondition : RouterCondition {
-  // https://wicg.github.io/netinfo/#effective-connection-types
-  EffectiveConnectionType effectiveConnectionType;
+  // https://wicg.github.io/netinfo/#dom-networkinformation-rtt
+  NetworkInformationRoundTripTime rtt;
 };
 
 dictionary RouterAndCondition : RouterCondition {
@@ -247,14 +254,12 @@ addEventListener('install', (event) => {
 
 ### Avoid using ServiceWorker for good network connection
 ```js
-// If network connection is good enough, use network directly.
+// If network round-trip time is good enough, use network directly.
 addEventListener('install', (event) => {
   event.addRoutes({
     condition: {
-      or: [
-        {effectiveConnectionType: "3g"},
-        {effectiveConnectionType: "4g"}
-      ]
+      // RTT <= 150 ms.
+      rtt: {le: 150}
     },
     source: "network"
   });
