@@ -50,16 +50,10 @@ dictionary RouterRunningStatusCondition : RouterCondition {
 
 enum RunningStatusEnum { "running", "not-running" }
 
-dictionary NetworkInformationRoundTripTime {
-  unsigned long lt;
-  unsigned long le;
-  unsigned long gt;
-  unsigned long ge;
-};
-
 dictionary RouterNetworkQualityCondition : RouterCondition {
   // https://wicg.github.io/netinfo/#dom-networkinformation-rtt
-  NetworkInformationRoundTripTime rtt;
+  unsigned long rttLessThan;
+  unsigned long rttGreaterThan;
 };
 
 dictionary RouterAndCondition : RouterCondition {
@@ -259,7 +253,7 @@ addEventListener('install', (event) => {
   event.addRoutes({
     condition: {
       // RTT <= 150 ms.
-      rtt: {le: 150}
+      {not: {rttGreaterThan: 150}},
     },
     source: "network"
   });
