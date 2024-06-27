@@ -253,7 +253,7 @@ addEventListener('install', (event) => {
   event.addRoutes({
     condition: {
       // RTT <= 150 ms.
-      {not: {rttGreaterThan: 150}},
+      {not: {rttGreaterThan: 150}}
     },
     source: "network"
   });
