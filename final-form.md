@@ -252,11 +252,31 @@ addEventListener('install', (event) => {
 addEventListener('install', (event) => {
   event.addRoutes({
     condition: {
-      // RTT <= 150 ms.
+      // RTT <= 150 ms. (It is actually represented like "not > 150ms")
       {not: {rttGreaterThan: 150}}
     },
     source: "network"
   });
   // Otherwise, fallback to fetch-handler (default).
+});
+```
+
+It can also be written like:
+```js
+// If network round-trip time is good enough, use network directly.
+addEventListener('install', (event) => {
+  event.addRoutes([{
+    condition: {
+      // RTT > 150 ms.
+      rttGreaterThan: 150
+    },
+    source: "fetch-event"
+  },
+  { // fallback to "network" by default.
+    condition: {
+      urlPattern: new URLPattern()
+    },
+    source: "network"
+  }]);
 });
 ```
