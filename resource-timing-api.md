@@ -14,6 +14,18 @@
 
 *   Introduce timing info for the ServiceWorker Static Routing API in Resource Timing API and Navigation Timing API.
 
+## User needs
+
+To bring better user experience with reducing frustration on rendering the web
+sites, it is good to use resource timing API to evaluate their page performance.  As explained in
+the ServiceWorker static routing API's explainer, one of the motivations to introduce the API to
+the site is page performance improvement. 
+
+By utilizing the resource timing feature for the static routing API, developers gain the ability
+to gauge the latency introduced by the API itself. This includes measuring aspects like router evaluation
+time and cache lookup duration. Additionally, developers can verify if the initially matched source was
+ultimately used to fetch the resource, and if not, identify the alternative source that was employed.
+
 
 ## Background
 
