@@ -394,6 +394,37 @@ type is as follows:
 </table>
 
 
+## Security and Privacy Concerns
+
+### Security Concerns
+
+The primary security concern in this proposal is the potential timing
+information leakage of the website, common amongst resource timing information.
+This proposal newly exposes timing information of when the routing occurred, as
+well as which source was used.
+
+This information can be used by malicious actors to gain the website's internal
+logic and conduct timing attacks if provided with high resolution timers.
+To mitigate such issues, we take the same approach with other resource timing
+information
+i.e. Expose both timing information and source usage information to either the
+same origin or the resources with the proper Timing-Allow-Origin HTTP response
+header ([link](https://www.w3.org/TR/resource-timing/#sec-security)).
+
+### Privacy Concerns
+
+The privacy concern of this proposal is the potential fingerprinting.
+Information such as the interval between timings or cache hit / miss may
+allow websites to track users across browsing sessions. In the case of a static
+routing API, we would expose the routing source, which could be used to identify
+whether we hit cache storage or not, especially when "cache" is specified as
+the routing source. 
+
+Similar to other resource timing information ([link](https://www.w3.org/TR/resource-timing/#sec-security)), we believe
+"load event on resources can already measure timing to determine cache hits and
+misses in a limited fashion, and the cross-origin restrictions in HTTP Fetch
+prevent the leakage of any additional information."
+
 
 ## Discussions
 
