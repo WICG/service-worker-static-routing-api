@@ -71,20 +71,22 @@ the alternative).
 
 We add the following two timing information:
 
-*   workerRouterEvaluationStart
+*   [Currently Under discussion] workerRouterEvaluationStart
     *   A `DOMHighResTimeStamp`, initially 0
     *   Time to start matching a request with registered router rules
+    *   This field is currently under discussion, and will not be included in the initial spec change
+        *   We will revisit this field once the static routing is adopted widely to determine with more data
 *   workerCacheLookupStart
     *   A `DOMHighResTimeStamp`, initially 0
     *   Time to start looking up the cache storage if the source is "cache"
 
 In addition to the timestamp information, we also add the following two route source information:
 
-*   matchedRouterSource
+*   workerMatchedRouterSource
     *   A `RouterSource`, initially empty string
     *   The enum string of the matched source (the source of result of router evaluation)
         *   This shall match to "network", "cache", "fetch-event", or "race-network-and-fetch-handler". If no rule is matched, it shall be an empty string.
-*   finalRouterSource
+*   workerFinalRouterSource
     *   A `RouterSource`, initially empty string
     *   The enum string of the used source
         *   This shall match to "network", "cache", or "fetch-event"
@@ -416,4 +418,15 @@ scope of Timing Info for the API.
 ### `fetchStart` on Cache Hit
 
 When the cache is specified as the source and the resource is found in the cache
-(cache hit), no fetch operation is performed. Therefore, fetchStart will not be set.
+(cache hit), no fetch operation is performed.
+To align the behavior with other fields, we will set `fetchStart` to `responseStart`
+when the resource is from cache.
+
+### `deliveryType` when final router source is from cache
+
+When the final router source is from cache, the `deliveryType` property should also
+be set. Currently, `deliveryType` has `cache` as one of the values. However, this
+points to the http-cache, and not ServiceWorker cache. To avoid confusion,
+we should introduce `SW-cache` value to `deliveryType`, where the value is set when
+the response comes from ServiceWorker cache (both for ServiceWorker and static
+routing API).
