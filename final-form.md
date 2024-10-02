@@ -74,7 +74,7 @@ dictionary RouterSource {
   RouterSourceBehaviorEnum behaviorEnum = "finish-with-success";
 };
 
-enum RouterSourceEnum { "network", "cache", "fetch-event", "race-network-and-fetch-handler" };
+enum RouterSourceEnum { "network", "cache", "fetch-event", "race-network-and-fetch-handler", "race-network-and-cache" };
 
 // Behavior on successful response.
 // finish-with-success: finish getting a response if the source is successful. (default)
@@ -101,6 +101,11 @@ dictionary RouterCacheSource : RouterSource {
 dictionary RouterFetchEventSource : RouterSource {
   // ID to be used as a routerCallbackId in the fetch event.
   DOMString? id;
+};
+
+dictionary RouterRaceNetworkAndCacheSource : RouterSource {
+  // cache name.
+  DOMstring raceNetworkAndCacheCacheName;
 };
 ```
 
@@ -219,7 +224,7 @@ addEventListener('install', (event) => {
 });
 ```
 
-### race fetch listener and network
+### race network and fetch handler
 
 ```js
 // race for all same-origin URLs that start with "/articles".
@@ -229,6 +234,40 @@ addEventListener('install', (event) => {
       urlPattern: "/articles/*"
     },
     source: "race-network-and-fetch-handler"
+  });
+});
+```
+
+### race network and cache storage
+
+To deal with devices with slow storage access, web developer may want to race
+network and cache storage.  In this case, if the cache torage access is too slow
+or the cache storage lookup fails, the network response is used.
+
+```js
+// race for all same-origin URLs that start with "/articles".
+addEventListener('install', (event) => {
+  event.addRoutes({
+    condition: {
+      urlPattern: "/articles/*"
+    },
+    source: "race-network-and-cache"
+  });
+});
+```
+
+In case the cache storage name need to specified, it can be written like:
+
+```js
+// race for all same-origin URLs that start with "/articles".
+addEventListener('install', (event) => {
+  event.addRoutes({
+    condition: {
+      urlPattern: "/articles/*"
+    },
+    source: {
+      raceNetworkAndCacheCacheName: "articles"
+    }
   });
 });
 ```
