@@ -430,5 +430,5 @@ When the final router source is from cache, the `deliveryType` property should a
 be set. Currently, `deliveryType` has `cache` as one of the values. However, this
 points to the [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching), and not
 [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) result. To avoid confusion,
-we should introduce `SW-cache` value to `deliveryType`, where the value is set when
+we should introduce `cache-storage` value to `deliveryType`, where the value is set when
 the response comes from Cache API (both for ServiceWorker and static routing API).
