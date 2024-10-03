@@ -241,7 +241,7 @@ addEventListener('install', (event) => {
 ### race network and cache storage
 
 To deal with devices with slow storage access, web developer may want to race
-network and cache storage.  In this case, if the cache torage access is too slow
+network and cache storage.  In this case, if the cache storage access is too slow
 or the cache storage lookup fails, the network response is used.
 
 ```js
