@@ -272,6 +272,9 @@ addEventListener('install', (event) => {
 });
 ```
 
+The response will be the first OK response from either of network or cache storage.  i.e. 200 response for network, cache lookup success for
+cache storage.  If either of responses are not OK, the other response will be used.  If both are not OK, network error will be passed.
+
 ### Avoid using ServiceWorker for non app-shell resources 
 ```js
 // load non app shell resources from network.
