@@ -397,34 +397,33 @@ type is as follows:
 ## Security and Privacy Concerns
 
 ### Security Concerns
+The proposed features extend the widely used [Resource Timing API](https://www.w3.org/TR/resource-timing/#sec-security), inheriting
+its security considerations.
 
-The primary security concern in this proposal is the potential timing
-information leakage of the website, common amongst resource timing information.
-This proposal newly exposes timing information of when the routing occurred, as
-well as which source was used.
+As covered in the resource timing specification, the main security concern is
+the use of high resolution timers. The timing field of the resource timing is
+defined to use high resolution timers. However, if malicious actors gain access
+to high resolution timers, they could use the exposed fields as a part of
+Spectre attack to inspect any memory accesses. In addition, this could expose
+timing information about how the other origins loaded as well, leading to
+inferring information about the user's activity across origins.
 
-This information can be used by malicious actors to gain the website's internal
-logic and conduct timing attacks if provided with high resolution timers.
-To mitigate such issues, we take the same approach with other resource timing
-information
-i.e. Expose both timing information and source usage information to either the
-same origin or the resources with the proper Timing-Allow-Origin HTTP response
-header ([link](https://www.w3.org/TR/resource-timing/#sec-security)).
+To mitigate these risks, the same-origin policy is enforced by default, with
+specific attributes set to zero, as defined in the HTTP Fetch standard.
+Resource providers can selectively expose timing data by utilizing the
+Timing-Allow-Origin HTTP response header, granting access to specified domains.
 
 ### Privacy Concerns
 
-The privacy concern of this proposal is the potential fingerprinting.
-Information such as the interval between timings or cache hit / miss may
-allow websites to track users across browsing sessions. In the case of a static
-routing API, we would expose the routing source, which could be used to identify
-whether we hit cache storage or not, especially when "cache" is specified as
-the routing source. 
-
-Similar to other resource timing information ([link](https://www.w3.org/TR/resource-timing/#sec-security)), we believe
-"load event on resources can already measure timing to determine cache hits and
-misses in a limited fashion, and the cross-origin restrictions in HTTP Fetch
-prevent the leakage of any additional information."
-
+Similar to the security concerns, privacy concern also inherits the same issue
+as the Resource Timing API. It has a potential of fingerprinting.
+While statistical fingerprinting poses a privacy risk, where malicious websites
+can infer a user's browsing history by analyzing resource loading times, the
+Resource Timing API doesn't significantly exacerbate this issue.
+Existing mechanisms, like the load event, already allow for limited cache
+timing measurements. Furthermore, cross-origin restrictions in HTTP Fetch,
+enforced by the Timing-Allow-Origin header, prevent this API from exposing
+additional information that could be exploited for fingerprinting.
 
 ## Discussions
 
