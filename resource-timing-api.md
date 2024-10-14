@@ -422,8 +422,8 @@ can infer a user's browsing history by analyzing resource loading times, the
 Resource Timing API doesn't significantly exacerbate this issue.
 Existing mechanisms, like the load event, already allow for limited cache
 timing measurements. Furthermore, cross-origin restrictions in HTTP Fetch,
-enforced by the Timing-Allow-Origin header, prevent this API from exposing
-additional information that could be exploited for fingerprinting.
+which is enforced by the Timing-Allow-Origin header, prevent this API from
+exposing additional information that could be exploited for fingerprinting.
 
 ## Discussions
 
