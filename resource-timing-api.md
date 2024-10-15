@@ -394,6 +394,36 @@ type is as follows:
 </table>
 
 
+## Security and Privacy Concerns
+
+### Security Concerns
+The proposed features extend the widely used [Resource Timing API](https://www.w3.org/TR/resource-timing/#sec-security), inheriting
+its security considerations.
+
+As covered in the resource timing specification, the main security concern is
+the use of high resolution timers. The timing field of the resource timing is
+defined to use high resolution timers. However, if malicious actors gain access
+to high resolution timers, they could use the exposed fields as a part of
+Spectre attack to inspect any memory accesses. In addition, this could expose
+timing information about how the other origins loaded as well, leading to
+inferring information about the user's activity across origins.
+
+To mitigate these risks, the same-origin policy is enforced by default, with
+specific attributes set to zero, as defined in the HTTP Fetch standard.
+Resource providers can selectively expose timing data by utilizing the
+Timing-Allow-Origin HTTP response header, granting access to specified domains.
+
+### Privacy Concerns
+
+Similar to the security concerns, privacy concern also inherits the same issue
+as the Resource Timing API. It has a potential of fingerprinting.
+While statistical fingerprinting poses a privacy risk, where malicious websites
+can infer a user's browsing history by analyzing resource loading times, the
+Resource Timing API doesn't significantly exacerbate this issue.
+Existing mechanisms, like the load event, already allow for limited cache
+timing measurements. Furthermore, cross-origin restrictions in HTTP Fetch,
+which is enforced by the Timing-Allow-Origin header, prevent this API from
+exposing additional information that could be exploited for fingerprinting.
 
 ## Discussions
 
