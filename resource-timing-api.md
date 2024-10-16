@@ -432,6 +432,6 @@ points to the [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/C
 [Cache API (CacheStorage)](https://developer.mozilla.org/en-US/docs/Web/API/Cache) result. To avoid confusion,
 we should introduce `cache-storage` value to `deliveryType`, where the value is set when
 the response comes from Cache API.
-This is set either when the response is from the cache rule (with cache hit) in
+The deliveryType `cache-storage` is set either when the response is from the cache rule (with cache hit) in
 static routing API, or when the response is coming from fetch handler response,
 coming from the CacheStorage.
