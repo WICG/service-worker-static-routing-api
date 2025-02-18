@@ -115,7 +115,7 @@ addEventListener('install', (event) => {
 
 ```js
 // Measure routerEvaluationTime 
-let timing = window.performance.timing;
+let timing = performance.getEntriesByType('navigation');
 let routerEvaluationTime = 0.0;
 switch (timing.finalRouteSource) {
   case "network":
@@ -149,7 +149,7 @@ addEventListener('install', (event) => {
 
 ```js
 // Measure routerEvaluationTime 
-let timing = window.performance.timing;
+let timing = performance.getEntriesByType('navigation');
 let routerEvaluationTime = 0.0;
 switch (timing.finalRouteSource) {
   case "network":
@@ -181,7 +181,7 @@ addEventListener('install', (event) => {
 
 ```js
 // Measure routerEvaluationTime 
-let timing = window.performance.timing;
+let timing = performance.getEntriesByType('navigation');
 let routerEvaluationTime = 0.0;
 switch (timing.finalRouteSource) {
   case "network":
@@ -217,7 +217,7 @@ addEventListener('install', (event) => {
 
 ```js
 // Measure routerEvaluationTime and cacheLookupTime
-let timing = window.performance.timing;
+let timing = performance.getEntriesByType('navigation');
 let routerEvaluationTime = 0.0;
 let cacheLookupTime = 0.0;
 switch (timing.FinalRouteSource) {
