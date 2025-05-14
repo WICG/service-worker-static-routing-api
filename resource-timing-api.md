@@ -402,9 +402,7 @@ its security considerations.
 
 As covered in the resource timing specification, the main security concern is
 the use of high resolution timers. The timing field of the resource timing is
-defined to use high resolution timers. However, if malicious actors gain access
-to high resolution timers, they could use the exposed fields as a part of
-Spectre attack to inspect any memory accesses. In addition, this could expose
+defined to use high resolution timers. In addition, this could expose
 timing information about how the other origins loaded as well, leading to
 inferring information about the user's activity across origins.
 
